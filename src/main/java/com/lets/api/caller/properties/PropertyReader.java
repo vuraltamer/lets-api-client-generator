@@ -4,7 +4,17 @@ import java.io.*;
 import java.util.*;
 
 public class PropertyReader {
-    public static CallerProperties read() {
+
+    private static CallerProperties callerProperties;
+
+    public static CallerProperties properties() {
+        if (callerProperties == null) {
+            return callerProperties = read();
+        }
+        return callerProperties;
+    }
+
+    private static CallerProperties read() {
         Properties properties = getProperties();
         validateProperties(properties);
         return CallerProperties.create(properties);

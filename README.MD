@@ -5,6 +5,7 @@
     com.lets.api.caller.java-version= 17 //set your api version
     com.lets.api.caller.gradle-version= 8.5 //set your api version
     com.lets.api.caller.api-name= person-service-client
+    com.lets.api.caller.scan-package= com.project.main // must be last package before the subpackages (if not specified, it scans all classes from the base package)
     com.lets.api.caller.dependencies= [org.springframework.boot:spring-boot-starter-data-mongodb,\
         \ org.springframework.boot:spring-boot-starter-data-test] // third party dependencies
 

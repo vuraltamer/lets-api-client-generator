@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.lets.api.caller.util.base.Util.isStatic;
-
 public class ControllerModelClassCreator {
 
     public static Set<Class> create(ApiDetail apiDetail) {

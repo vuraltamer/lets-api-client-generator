@@ -1,13 +1,17 @@
 package com.lets.api.caller.util.base;
 
 import com.lets.api.caller.constants.ApiConstants;
+import com.lets.api.caller.properties.PropertyReader;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.List;
 
 import static com.lets.api.caller.constants.CallerConstants.BASE_PATH;
 
 public class Util {
+
+    private static final String REMOVED_PATH = PropertyReader.properties().getScanPackage() + "." ;
 
     public static boolean isNonControllerClass(Class clazz) {
         return clazz.getPackageName().startsWith("java.") ||
@@ -24,10 +28,10 @@ public class Util {
         if (clazz.isMemberClass()) {
             return BASE_PATH + clazz.getDeclaringClass().getCanonicalName()
                     .toLowerCase()
-                    .replaceFirst("com.", ApiConstants.EMPTY);
+                    .replaceFirst(REMOVED_PATH, ApiConstants.EMPTY);
         }
 
-        return BASE_PATH + clazz.getPackageName().replaceFirst("com.", ApiConstants.EMPTY);
+        return BASE_PATH + clazz.getPackageName().replaceFirst(REMOVED_PATH, ApiConstants.EMPTY);
     }
 
     public static String getFullName(Class clazz) {
@@ -43,7 +47,7 @@ public class Util {
             return clazz.getPackageName();
         }
         return BASE_PATH + clazz.getName()
-                .replaceFirst("com.", ApiConstants.EMPTY)
+                .replaceFirst(REMOVED_PATH, ApiConstants.EMPTY)
                 .replaceFirst("Controller", "Client");
     }
 
@@ -72,5 +76,13 @@ public class Util {
 
     public static boolean isEnum(Class clazz) {
         return clazz.isEnum();
+    }
+
+    public static boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
+    public static boolean isEmpty(List<String> list) {
+        return list == null || list.isEmpty();
     }
 }
