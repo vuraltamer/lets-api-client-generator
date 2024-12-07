@@ -13,7 +13,6 @@ java {
         languageVersion = JavaLanguageVersion.of(17)
     }
     withSourcesJar()
-    withJavadocJar()
 }
 
 configurations {
@@ -52,7 +51,7 @@ dependencies {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java // Derlenmiş Java bileşenlerini ekler
+            from components.java
         }
     }
     repositories {
@@ -67,16 +66,24 @@ publishing {
     }
 }
 
-tasks.jar {
+bootJar {
+    enabled = false  // executable jar'ı devre dışı bırak
+}
+
+jar {
+    enabled = true
+    archiveClassifier = ''
+
     manifest {
         attributes(
                 'Implementation-Title': 'feign api client generator',
                 'Implementation-Version': version,
-                'Main-Class': 'com.lets.apis.client.generator.ApiClientGenerator'
         )
     }
+
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
 }
