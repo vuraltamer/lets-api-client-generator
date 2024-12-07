@@ -35,3 +35,40 @@ add this task to build.gradle
 **run createFeignClient**
 
 createFeignClient task is executed, a .generator file is created in the project root
+
+**service dependency requirements**
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.8"
+        }
+    } // required
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web-services'
+        implementation 'com.lets.apis:lets-api-caller:1.0.1' // api-caller jar
+        implementation 'org.reflections:reflections:0.10.2' // required
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign' // required
+        implementation 'org.projectlombok:lombok:1.18.24' // required
+        annotationProcessor 'org.projectlombok:lombok:1.18.24' // required
+        compileOnly 'org.projectlombok:lombok:1.18.28' // required
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
+
+**lets try**
+
+- caller-config
+![img.png](img/img.png)
+
+
+- services
+![img_1.png](img/img_1.png)
+
+
+- run gradle createFeignClient command
+![img_2.png](img/img_2.png)
+
+
+- finally
+![img_3.png](img/img_3.png)
