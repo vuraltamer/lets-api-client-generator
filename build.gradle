@@ -67,7 +67,7 @@ publishing {
 }
 
 bootJar {
-    enabled = false  // executable jar'ı devre dışı bırak
+    enabled = false
 }
 
 jar {
@@ -77,12 +77,9 @@ jar {
     manifest {
         attributes(
                 'Implementation-Title': 'feign api client generator',
-                'Implementation-Version': version,
+                'Implementation-Version': version
         )
     }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
 }
