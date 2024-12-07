@@ -59,16 +59,17 @@ createFeignClient task is executed, a .generator file is created in the project 
 **lets try**
 
 - caller-config
+
 ![img.png](img/img.png)
 
-
 - services
+
 ![img_1.png](img/img_1.png)
 
-
 - run gradle createFeignClient command
+ 
 ![img_2.png](img/img_2.png)
 
-
 - finally
+
 ![img_3.png](img/img_3.png)
