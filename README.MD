@@ -1,17 +1,22 @@
 **FEIGN CLIENT API GENERATOR**
 
-**create caller-config.properties file**
+**lets-api-caller jar implementation**
+
+    -run gradle jar command for lets-api-caller
+    -lets-api-caller implementation for service class
+
+**create caller-config.properties file for service class**
 
     com.lets.apis.api.caller.java-version= 17 //set your api version
     com.lets.apis.api.caller.gradle-version= 8.5 //set your api version
     com.lets.apis.api.caller.api-name= person-service-client
     com.lets.apis.api.caller.scan-package= com.project.main // must be last package before the subpackages (if not specified, it scans all classes from the base package)
     com.lets.apis.api.caller.dependencies= [org.springframework.boot:spring-boot-starter-data-mongodb,\
-        \ org.springframework.boot:spring-boot-starter-data-test] // third party dependencies
+        \ sample:dependencies:1.0.0] // third party dependencies
 
-caller-config path : src/resources/caller-config.properties
+caller-config path : src/main/resources/caller-config.properties
 
-**create feign client classes**
+**generate feign client classes**
 
 add this task to build.gradle
 
