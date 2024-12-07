@@ -12,6 +12,8 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+    withSourcesJar()
+    withJavadocJar()
 }
 
 configurations {
@@ -47,29 +49,34 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier.set('sources')
-    from sourceSets.main.java.srcDirs
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier.set('javadoc')
-    from javadoc.destinationDir
-}
-
 publishing {
     publications {
-        autorest(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            groupId 'io.github.lets.apis'
-            artifactId 'api-caller-generator'
-            version '1.0.0'
+        mavenJava(MavenPublication) {
+            from components.java // Derlenmiş Java bileşenlerini ekler
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/vuraltamer/lets-api-caller")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+                password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+tasks.jar {
+    manifest {
+        attributes(
+                'Implementation-Title': 'feign api client generator',
+                'Implementation-Version': version,
+                'Main-Class': 'com.lets.apis.api.caller.ApiCallerGenerator'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
