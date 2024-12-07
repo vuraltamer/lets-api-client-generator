@@ -6,7 +6,7 @@ import com.lets.apis.api.caller.constants.CallerConstants;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.List;
+import java.util.Collection;
 
 public class Util {
 
@@ -81,7 +81,7 @@ public class Util {
         return str == null || str.isEmpty();
     }
 
-    public static boolean isEmpty(List<String> list) {
-        return list == null || list.isEmpty();
+    public static boolean isEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
     }
 }

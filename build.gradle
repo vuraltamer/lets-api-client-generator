@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.0'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'maven-publish'
 }
 
 group = 'com.lets.caller'
@@ -22,6 +23,7 @@ configurations {
 repositories {
     maven { url 'https://repo.spring.io/milestone' }
     maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://jitpack.io' }
     gradlePluginPortal()
     mavenCentral()
 }
@@ -43,6 +45,29 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     compileOnly 'org.projectlombok:lombok:1.18.28'
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.java.srcDirs
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set('javadoc')
+    from javadoc.destinationDir
+}
+
+publishing {
+    publications {
+        autorest(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            groupId 'io.github.lets.apis'
+            artifactId 'api-caller-generator'
+            version '1.0.0'
+        }
+    }
 }
 
 tasks.named('test') {

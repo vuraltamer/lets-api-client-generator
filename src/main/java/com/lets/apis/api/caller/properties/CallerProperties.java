@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import static com.lets.apis.api.caller.util.base.Util.isEmpty;
 import static java.util.Collections.EMPTY_LIST;
 
 @Getter

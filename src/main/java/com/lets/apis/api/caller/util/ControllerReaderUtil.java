@@ -3,6 +3,7 @@ package com.lets.apis.api.caller.util;
 import com.lets.apis.api.caller.model.ApiDetail;
 import com.lets.apis.api.caller.properties.CallerProperties;
 import com.lets.apis.api.caller.properties.PropertyReader;
+import com.lets.apis.api.caller.util.base.Util;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,9 @@ public class ControllerReaderUtil {
     public static Set<Class> getControllers() {
         final Reflections reflections = new Reflections(getScanPackage(), Scanners.TypesAnnotated);
         final Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(RestController.class);
+        if (Util.isEmpty(annotatedClasses)) {
+            throw new RuntimeException("ControllerReaderUtil::getControllers::controller not found. check scan package");
+        }
         return new HashSet<>(annotatedClasses);
     }
 
