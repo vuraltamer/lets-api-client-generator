@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class GradleDetail {
-    private CallerProperties callerProperties;
     private GradleModel buildGradle;
     private GradleModel settingsGradle;
 
