@@ -1,17 +1,17 @@
 **FEIGN CLIENT API GENERATOR**
 
-**lets-api-caller jar implementation**
+**lets-api-client-generator jar implementation**
 
-    -run gradle jar command for lets-api-caller
-    -lets-api-caller implementation for service class
+    -run gradle jar command for lets-api-client-generator
+    -lets-api-client-generator implementation for service class
 
 **create caller-config.properties file for service class**
 
-    com.lets.apis.api.caller.java-version= 17 //set your api version
-    com.lets.apis.api.caller.gradle-version= 8.5 //set your api version
-    com.lets.apis.api.caller.api-name= person-service-client
-    com.lets.apis.api.caller.scan-package= com.project.main // must be last package before the subpackages (if not specified, it scans all classes from the base package)
-    com.lets.apis.api.caller.dependencies= [org.springframework.boot:spring-boot-starter-data-mongodb,\
+    com.lets.apis.client.generator.java-version= 17 //set your api version
+    com.lets.apis.client.generator.gradle-version= 8.5 //set your api version
+    com.lets.apis.client.generator.api-name= person-service-client
+    com.lets.apis.client.generator.scan-package= com.project.main // must be last package before the subpackages (if not specified, it scans all classes from the base package)
+    com.lets.apis.client.generator.dependencies= [org.springframework.boot:spring-boot-starter-data-mongodb,\
         \ sample:dependencies:1.0.0] // third party dependencies
 
 caller-config path : src/main/resources/caller-config.properties
@@ -22,7 +22,7 @@ add this task to build.gradle
 
     task createFeignClient {
         doLast {
-            def mainClass = 'com.lets.apis.api.caller.ApiCallerGenerator'
+            def mainClass = 'com.lets.apis.client.generator.ApiClientGenerator'
             def args = []
             javaexec {
                 main = mainClass
@@ -46,7 +46,7 @@ createFeignClient task is executed, a .generator file is created in the project 
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web-services'
-        implementation 'com.lets.apis:lets-api-caller:1.0.1' // api-caller jar
+        implementation 'com.lets.apis:lets-api-client-generator:1.0.1' // api-client-generator jar
         implementation 'org.reflections:reflections:0.10.2' // required
         implementation 'org.springframework.cloud:spring-cloud-starter-openfeign' // required
         implementation 'org.projectlombok:lombok:1.18.24' // required
