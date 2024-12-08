@@ -1,0 +1,59 @@
+tasks.register('generateApiClientJar') {
+    dependsOn tasks.named('createApiClientClasses')
+    doLast {
+        exec {
+            workingDir = file("${apiClientPath}/.generator/${apiName}")
+            if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+                commandLine 'cmd', '/c', 'gradle create-wrapper'
+            } else {
+                commandLine 'bash', '-c', 'gradle create-wrapper'
+            }
+        }
+    }
+    doLast {
+        exec {
+            workingDir = file("${apiClientPath}/.generator/${apiName}")
+            if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+                commandLine 'cmd', '/c', './gradlew jar'
+            } else {
+                commandLine 'bash', '-c', './gradlew jar'
+            }
+        }
+    }
+}
+
+tasks.register('createApiClientClasses', JavaExec) {
+    mainClass = 'com.lets.apis.client.generator.ApiClientGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+    args = []
+}
+
+def loadProperties() {
+    def props = new Properties()
+    def propertiesFile = file('src/main/resources/caller-config.properties')
+    if (!propertiesFile.exists()) {
+        throw new GradleException("caller-config.properties file not found in src/main/resources")
+    }
+    propertiesFile.withInputStream { stream ->
+        props.load(stream)
+    }
+    return props
+}
+
+def getApiName() {
+    def callerConfig = loadProperties()
+    def apiName = callerConfig.getProperty('com.lets.apis.client.generator.api-name')
+    if (!apiName) {
+        throw new GradleException("api name not specified in caller-config.properties")
+    }
+    return apiName
+}
+
+def getApiClientPath() {
+    def callerConfig = loadProperties()
+    def apiClientPath = callerConfig.getProperty('com.lets.apis.client.generator.api-client-path')
+    if (!apiClientPath || apiClientPath.trim().isEmpty()) {
+        return projectDir.absolutePath
+    }
+    return apiClientPath
+}

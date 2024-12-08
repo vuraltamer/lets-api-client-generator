@@ -7,9 +7,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class ApiDetail {
     String directoryPath;
     Set<Class> controllerClass;

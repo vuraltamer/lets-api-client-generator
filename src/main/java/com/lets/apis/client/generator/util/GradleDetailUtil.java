@@ -10,7 +10,8 @@ public class GradleDetailUtil {
     public static void load(ApiDetail apiDetail) {
         CallerProperties callerProperties = PropertyReader.properties();
         apiDetail.setGradleDetail(GradleDetail.create(callerProperties));
-        apiDetail.setDirectoryPath(new String(".generator/{API_NAME}/")
-                .replace("{API_NAME}", callerProperties.getApiName()));
+        apiDetail.setDirectoryPath(new String("{API_CLIENT_PATH}.generator/{API_NAME}/")
+                .replace("{API_NAME}", callerProperties.getApiName())
+                .replace("{API_CLIENT_PATH}", callerProperties.getApiClientPath()));
     }
 }

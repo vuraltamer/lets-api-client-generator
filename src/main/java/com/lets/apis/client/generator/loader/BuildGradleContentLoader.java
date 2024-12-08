@@ -12,8 +12,9 @@ public class BuildGradleContentLoader {
     public static String load(CallerProperties callerProperties) {
         return new String(GradleConstants.BUILD_GRADLE_CONTENT)
                 .replace("{JAR_NAME}", callerProperties.getApiName())
-                        .replace("{IMPLEMENTATIONS}", getImplementations(callerProperties))
-                        .replace("{JAVA_VERSION}", callerProperties.getJavaVersion());
+                .replace("{IMPLEMENTATIONS}", getImplementations(callerProperties))
+                .replace("{JAVA_VERSION}", callerProperties.getJavaVersion())
+                .replace("{GRADLE_VERSION}", callerProperties.getGradleVersion());
     }
 
     private static String getImplementations(CallerProperties callerProperties) {

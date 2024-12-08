@@ -18,17 +18,29 @@ public class CallerProperties {
     private String javaVersion;
     private String gradleVersion;
     private String apiName;
-    private String scanPackage = "";
+    private String scanPackage;
+    private String apiClientPath;
     private List<String> dependencies;
 
     public static CallerProperties create(Properties properties) {
         CallerProperties callerProperties = new CallerProperties();
         callerProperties.setApiName(properties.getProperty("com.lets.apis.client.generator.api-name"));
         callerProperties.setScanPackage(properties.getProperty("com.lets.apis.client.generator.scan-package"));
+        callerProperties.setApiClientPath(properties.getProperty("com.lets.apis.client.generator.api-client-path"));
         callerProperties.setJavaVersion(properties.getProperty("com.lets.apis.client.generator.java-version"));
         callerProperties.setGradleVersion(properties.getProperty("com.lets.apis.client.generator.gradle-version"));
         callerProperties.setDependencies(getDependencies(properties));
         return callerProperties;
+    }
+
+    private void setApiClientPath(String apiClientPath) {
+        if (Util.isEmpty(apiClientPath)) {
+            this.apiClientPath = "";
+        }else if (apiClientPath.endsWith("/")) {
+            this.apiClientPath = apiClientPath;
+        } else {
+            this.apiClientPath = apiClientPath + "/";
+        }
     }
 
     private static List<String> getDependencies(Properties properties) {
@@ -55,7 +67,7 @@ public class CallerProperties {
     }
 
     public void setScanPackage(String scanPackage) {
-        this.scanPackage = Util.isEmpty(scanPackage) ? "17" : scanPackage;;
+        this.scanPackage = Util.isEmpty(scanPackage) ? "" : scanPackage;
     }
 
     public void setDependencies(List<String> dependencies) {
