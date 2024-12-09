@@ -2,6 +2,7 @@ package com.lets.apis.client.generator.loader;
 
 import com.lets.apis.client.generator.constants.CallerConstants;
 import com.lets.apis.client.generator.model.ControllerModelDetail;
+import com.lets.apis.client.generator.template.TemplateReader;
 import com.lets.apis.client.generator.util.base.Util;
 
 public class ControllerModelContentLoader {
@@ -14,7 +15,7 @@ public class ControllerModelContentLoader {
     }
 
     private static String loadClassContent(ControllerModelDetail controllerModelDetail) {
-        return new String(CallerConstants.API_CLASS_CONTENT)
+        return new String(TemplateReader.content("api-model"))
                         .replace("{PACKAGE}", controllerModelDetail.getPackageName())
                         .replace("{IMPORTS}", controllerModelDetail.getImportsContent())
                         .replace("{CLASS_NAME}", controllerModelDetail.getClassName())
@@ -24,7 +25,7 @@ public class ControllerModelContentLoader {
     }
 
     private static String loadEnumContent(ControllerModelDetail controllerModelDetail) {
-        return new String(CallerConstants.API_ENUM_CONTENT)
+        return new String(TemplateReader.content("api-enum"))
                         .replace("{PACKAGE}", controllerModelDetail.getPackageName())
                         .replace("{ENUM_NAME}", controllerModelDetail.getClassName())
                         .replace("{VARIABLES}", controllerModelDetail.getEnumFieldContent());

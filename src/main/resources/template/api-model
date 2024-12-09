@@ -1,0 +1,10 @@
+package {PACKAGE};
+
+{IMPORTS}
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class {CLASS_NAME}{TYPE_PARAMETERS}{EXTENDS} {
+{VARIABLES}
+}

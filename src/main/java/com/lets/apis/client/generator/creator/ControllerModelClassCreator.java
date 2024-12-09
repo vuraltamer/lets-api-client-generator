@@ -37,7 +37,14 @@ public class ControllerModelClassCreator {
             if (declaredField.getGenericType() instanceof ParameterizedType) {
                 loadParameterizedApiClasses(clazzList, declaredField);
             }
-            loadApiClasses(declaredField.getType(), clazzList);
+            if (declaredField.getType().getComponentType() != null
+                    && Util.isEnum(declaredField.getType().getComponentType())) {
+                if (!declaredField.getName().equals("$VALUES")) {
+                    loadApiClasses(declaredField.getType(), clazzList);
+                }
+            } else {
+                loadApiClasses(declaredField.getType(), clazzList);
+            }
         }
         if (clazz.getSuperclass() != null && !Util.isNonControllerClass(clazz.getSuperclass())) {
             loadApiClasses(clazz.getSuperclass(), clazzList);

@@ -2,7 +2,7 @@ package com.lets.apis.client.generator.loader;
 
 import com.lets.apis.client.generator.constants.ApiConstants;
 import com.lets.apis.client.generator.properties.CallerProperties;
-import com.lets.apis.client.generator.constants.GradleConstants;
+import com.lets.apis.client.generator.template.TemplateReader;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 public class BuildGradleContentLoader {
 
     public static String load(CallerProperties callerProperties) {
-        return new String(GradleConstants.BUILD_GRADLE_CONTENT)
+        return new String(TemplateReader.content("build-gradle"))
                 .replace("{JAR_NAME}", callerProperties.getApiName())
+                .replace("{API_VERSION}", callerProperties.getApiVersion())
                 .replace("{IMPLEMENTATIONS}", getImplementations(callerProperties))
                 .replace("{JAVA_VERSION}", callerProperties.getJavaVersion())
                 .replace("{GRADLE_VERSION}", callerProperties.getGradleVersion());

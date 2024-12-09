@@ -18,6 +18,7 @@ public class CallerProperties {
     private String javaVersion;
     private String gradleVersion;
     private String apiName;
+    private String apiVersion;
     private String scanPackage;
     private String apiClientPath;
     private List<String> dependencies;
@@ -25,6 +26,7 @@ public class CallerProperties {
     public static CallerProperties create(Properties properties) {
         CallerProperties callerProperties = new CallerProperties();
         callerProperties.setApiName(properties.getProperty("com.lets.apis.client.generator.api-name"));
+        callerProperties.setApiVersion(properties.getProperty("com.lets.apis.client.generator.api-version"));
         callerProperties.setScanPackage(properties.getProperty("com.lets.apis.client.generator.scan-package"));
         callerProperties.setApiClientPath(properties.getProperty("com.lets.apis.client.generator.api-client-path"));
         callerProperties.setJavaVersion(properties.getProperty("com.lets.apis.client.generator.java-version"));
@@ -72,5 +74,9 @@ public class CallerProperties {
 
     public void setDependencies(List<String> dependencies) {
         this.dependencies = Util.isEmpty(dependencies) ? EMPTY_LIST : dependencies;;
+    }
+
+    public void setApiVersion(String apiVersion) {
+        this.apiVersion = Util.isEmpty(apiVersion) ? "1.0.0" : apiVersion;
     }
 }

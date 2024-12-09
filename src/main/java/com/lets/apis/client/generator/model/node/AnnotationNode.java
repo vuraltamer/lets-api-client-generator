@@ -15,6 +15,8 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.lets.apis.client.generator.constants.ApiConstants.EMPTY;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -49,7 +51,11 @@ public class AnnotationNode {
         for (Method method : methods) {
             try {
                 Object value = method.invoke(annotation);
-                annotationNode.getValues().put(method.getName(), value);
+                if (value != null && value instanceof String) {
+                    annotationNode.getValues().put(method.getName(), ((String) value).replaceAll("\\p{C}", EMPTY));
+                } else {
+                    annotationNode.getValues().put(method.getName(), value);
+                }
                 annotationNode.getImports().add(new ImportDetail(Util.getClass(value.getClass())));
             } catch (Exception e) {
             }
@@ -64,7 +70,7 @@ public class AnnotationNode {
 
     private static String getAnnotationParameters(HashMap<String, Object> values) {
         if (values.size() == 0) {
-            return ApiConstants.EMPTY;
+            return EMPTY;
         }
         return values.keySet().stream()
                 .filter(key -> filterAnnotation(values.get(key)))
@@ -76,7 +82,7 @@ public class AnnotationNode {
 
     private static boolean filterAnnotation(Object value) {
         if (!value.getClass().isArray()) {
-            return !ApiConstants.EMPTY.equals(value.toString());
+            return !EMPTY.equals(value.toString());
         }
         return Array.getLength(value) != 0;
     }

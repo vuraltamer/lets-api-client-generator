@@ -1,0 +1,8 @@
+package {PACKAGE};
+
+{IMPORTS}
+
+@FeignClient(name="{API_NAME}", url="${{FEIGN_URL}}", {PATH})
+public interface {CLASS_NAME} {
+{METHODS}
+}
