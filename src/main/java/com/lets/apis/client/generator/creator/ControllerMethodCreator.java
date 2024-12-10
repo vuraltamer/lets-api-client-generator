@@ -20,7 +20,8 @@ public class ControllerMethodCreator {
             PostMapping.class,
             PutMapping.class,
             DeleteMapping.class,
-            PatchMapping.class
+            PatchMapping.class,
+            RequestMapping.class
     );
 
     public static List<ControllerMethodDetail> create(ControllerDetail controllerDetail) {

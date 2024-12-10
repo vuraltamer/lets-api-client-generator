@@ -93,12 +93,19 @@ public class AnnotationNode {
             String replaceParam = array.length == 1 ? "{VALUE}" : "{{VALUE}}";
             return replaceParam
                     .replace("{VALUE}", Arrays.stream(array)
-                                                .map(element -> element instanceof String ? "\"" + element + "\"" : element.toString())
+                                                .map(element -> getAnnotationStringValue(element))
                                                 .collect(Collectors.joining(", "))
                     );
         }
         return value instanceof String
                 ? "\"{VALUE}\"".replace("{VALUE}", value.toString())
                 : value.toString();
+    }
+
+    private static String getAnnotationStringValue(Object element) {
+        if (element.getClass().isEnum()) {
+            return element.getClass().getSimpleName() + "." + element.toString();
+        }
+        return element instanceof String ? "\"" + element + "\"" : element.toString();
     }
 }
