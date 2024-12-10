@@ -104,7 +104,11 @@ public class ReturnTypeNode {
     private static Set<ImportDetail> setBasicClassImports(Type type) {
         Set<ImportDetail> imports = new HashSet<>();
         if (!Util.isPrimitive((Class) type)) {
-            imports.add(new ImportDetail(Util.getClass((Class) type)));
+            if (Util.isArray(type)) {
+                imports.add(new ImportDetail(((Class<?>) type).getComponentType()));
+            } else {
+                imports.add(new ImportDetail((Class) type));
+            }
         }
         return imports;
     }
@@ -119,7 +123,11 @@ public class ReturnTypeNode {
 
     private Set<Class> getClassNodeClasses(ReturnTypeNode parameterNode) {
         Set<Class> classes = new HashSet<>();
-        classes.add((Class) parameterNode.getType());
+        if (Util.isArray(parameterNode.getType())) {
+            classes.add(((Class<?>) parameterNode.getType()).getComponentType());
+        } else {
+            classes.add((Class) parameterNode.getType());
+        }
         if (parameterNode.getChildList().size() == 0) {
             return classes;
         }

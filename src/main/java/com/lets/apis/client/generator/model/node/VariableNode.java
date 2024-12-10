@@ -125,7 +125,11 @@ public class VariableNode {
     private static Set<ImportDetail> setBasicClassImports(Type type) {
         Set<ImportDetail> imports = new HashSet<>();
         if (!Util.isPrimitive((Class) type)) {
-            imports.add(new ImportDetail((Class) type));
+            if (Util.isArray(type)) {
+                imports.add(new ImportDetail(((Class<?>) type).getComponentType()));
+            } else {
+                imports.add(new ImportDetail((Class) type));
+            }
         }
         return imports;
     }
@@ -149,7 +153,11 @@ public class VariableNode {
 
     private Set<Class> getClassNodeClasses(VariableNode parameterNode) {
         Set<Class> classes = new HashSet<>();
-        classes.add((Class) parameterNode.getType());
+        if (Util.isArray(parameterNode.getType())) {
+            classes.add(((Class<?>) parameterNode.getType()).getComponentType());
+        } else {
+            classes.add((Class) parameterNode.getType());
+        }
         if (parameterNode.getChildList().size() == 0) {
             return classes;
         }
