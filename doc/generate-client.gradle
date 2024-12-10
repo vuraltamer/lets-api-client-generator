@@ -7,25 +7,11 @@ tasks.register('generateApiClientJar') {
 
     doLast {
         println("generateApiClientJar::create::gradle::wrapper::start")
-        exec {
-            workingDir = file("${apiClientPath}/.generator/${apiName}")
-            if (System.getProperty('os.name').toLowerCase().contains('windows')) {
-                commandLine 'cmd', '/c', 'gradle create-wrapper'
-            } else {
-                commandLine 'bash', '-c', 'gradle create-wrapper'
-            }
-        }
+        runGradleCommand("${apiClientPath}/.generator/${apiName}", 'create-wrapper')
         println("generateApiClientJar::create::gradle::wrapper::end")
 
         println("generateApiClientJar::create::client::jar::start")
-        exec {
-            workingDir = file("${apiClientPath}/.generator/${apiName}")
-            if (System.getProperty('os.name').toLowerCase().contains('windows')) {
-                commandLine 'cmd', '/c', './gradlew jar'
-            } else {
-                commandLine 'bash', '-c', './gradlew jar'
-            }
-        }
+        runGradleCommand("${apiClientPath}/.generator/${apiName}", 'jar')
         println("generateApiClientJar::create::client::jar::end")
 
         println("generateApiClientJar::end")
@@ -36,6 +22,17 @@ tasks.register('createApiClientClasses', JavaExec) {
     mainClass = 'com.lets.apis.client.generator.ApiClientGenerator'
     classpath = sourceSets.main.runtimeClasspath
     args = []
+}
+
+def runGradleCommand(String workingDirectory, String task) {
+    exec {
+        workingDir = file(workingDirectory)
+        if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+            commandLine 'cmd', '/c', "gradle ${task}"
+        } else {
+            commandLine 'bash', '-c', "gradle ${task}"
+        }
+    }
 }
 
 def loadProperties() {
