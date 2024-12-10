@@ -58,3 +58,6 @@ alternatively use this gradle codes from local generate-client.gradle : apply fr
 - finally
 
 ![img_3.png](img/img_3.png)
+
+
+**sample repo** : https://github.com/vuraltamer/feign-client-generator-test

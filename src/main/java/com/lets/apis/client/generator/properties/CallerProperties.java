@@ -47,7 +47,7 @@ public class CallerProperties {
 
     private static List<String> getDependencies(Properties properties) {
         String property = properties.getProperty("com.lets.apis.client.generator.dependencies");
-        if (property == null || property.isEmpty()) {
+        if (property == null || property.isEmpty() || property.equals("[]")) {
             return null;
         }
         String formattedProperty = property
