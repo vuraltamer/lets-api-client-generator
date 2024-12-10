@@ -1,12 +1,12 @@
 tasks.register('generateApiClientJar') {
-    logger.lifecycle("generateApiClientJar::start")
+    println("generateApiClientJar::start")
 
-    logger.lifecycle("generateApiClientJar::createApiClientClasses::start")
+    println("generateApiClientJar::createApiClientClasses::start")
     dependsOn tasks.named('createApiClientClasses')
-    logger.lifecycle("generateApiClientJar::createApiClientClasses::end")
+    println("generateApiClientJar::createApiClientClasses::end")
 
     doLast {
-        logger.lifecycle("generateApiClientJar::create::gradle::wrapper::start")
+        println("generateApiClientJar::create::gradle::wrapper::start")
         exec {
             workingDir = file("${apiClientPath}/.generator/${apiName}")
             if (System.getProperty('os.name').toLowerCase().contains('windows')) {
@@ -15,9 +15,9 @@ tasks.register('generateApiClientJar') {
                 commandLine 'bash', '-c', 'gradle create-wrapper'
             }
         }
-        logger.lifecycle("generateApiClientJar::create::gradle::wrapper::end")
+        println("generateApiClientJar::create::gradle::wrapper::end")
 
-        logger.lifecycle("generateApiClientJar::create::client::jar::start")
+        println("generateApiClientJar::create::client::jar::start")
         exec {
             workingDir = file("${apiClientPath}/.generator/${apiName}")
             if (System.getProperty('os.name').toLowerCase().contains('windows')) {
@@ -26,9 +26,9 @@ tasks.register('generateApiClientJar') {
                 commandLine 'bash', '-c', './gradlew jar'
             }
         }
-        logger.lifecycle("generateApiClientJar::create::client::jar::end")
+        println("generateApiClientJar::create::client::jar::end")
 
-        logger.lifecycle("generateApiClientJar::end")
+        println("generateApiClientJar::end")
     }
 }
 
