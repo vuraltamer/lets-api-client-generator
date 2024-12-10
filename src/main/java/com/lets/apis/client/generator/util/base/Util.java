@@ -10,6 +10,8 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
+import static com.lets.apis.client.generator.constants.CallerConstants.*;
+
 public class Util {
 
     private static final String REMOVED_PATH = PropertyReader.properties().getScanPackage() + "." ;
@@ -28,11 +30,17 @@ public class Util {
         }
         if (clazz.isMemberClass()) {
             return CallerConstants.BASE_PATH + clazz.getDeclaringClass().getCanonicalName()
-                    .toLowerCase()
-                    .replaceFirst(REMOVED_PATH, ApiConstants.EMPTY);
+                                                    .toLowerCase()
+                                                    .replace(CONTROLLER, FEIGN)
+                                                    .replace(CONTROLLERS, FEIGN)
+                                                    .replaceFirst(REMOVED_PATH, ApiConstants.EMPTY);
         }
 
-        return CallerConstants.BASE_PATH + clazz.getPackageName().replaceFirst(REMOVED_PATH, ApiConstants.EMPTY);
+        return CallerConstants.BASE_PATH
+                + clazz.getPackageName()
+                    .replace(CONTROLLER, FEIGN)
+                    .replace(CONTROLLERS, FEIGN)
+                    .replaceFirst(REMOVED_PATH, ApiConstants.EMPTY);
     }
 
     public static String getFullName(Class clazz) {

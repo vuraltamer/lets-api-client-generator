@@ -1,5 +1,9 @@
 tasks.register('generateApiClientJar') {
+    logger.info("generateApiClientJar::start")
+    logger.info("generateApiClientJar::createApiClientClasses::start")
     dependsOn tasks.named('createApiClientClasses')
+    logger.info("generateApiClientJar::createApiClientClasses::end")
+    logger.info("generateApiClientJar::create::gradle::wrapper::start")
     doLast {
         exec {
             workingDir = file("${apiClientPath}/.generator/${apiName}")
@@ -10,6 +14,7 @@ tasks.register('generateApiClientJar') {
             }
         }
     }
+    logger.info("generateApiClientJar::create::client::jar::start")
     doLast {
         exec {
             workingDir = file("${apiClientPath}/.generator/${apiName}")
@@ -20,6 +25,7 @@ tasks.register('generateApiClientJar') {
             }
         }
     }
+    logger.info("generateApiClientJar::create::client::jar::end")
 }
 
 tasks.register('createApiClientClasses', JavaExec) {

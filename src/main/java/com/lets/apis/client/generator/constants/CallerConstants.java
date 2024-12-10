@@ -18,4 +18,10 @@ public class CallerConstants {
     public static String PARAMETERIZED = "{RAW}<{CONTENT}>";
 
     public static final String BASE_PATH = "com.lets.apis.client.generator.";
+
+    public static final String CONTROLLER = ".controller";
+
+    public static final String CONTROLLERS = ".controllers";
+
+    public static final String FEIGN = ".feign";
 }
