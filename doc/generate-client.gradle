@@ -7,11 +7,11 @@ tasks.register('generateApiClientJar') {
 
     doLast {
         println("generateApiClientJar::create::gradle::wrapper::start")
-        runGradleCommand("${apiClientPath}/.generator/${apiName}", 'create-wrapper')
+        runGradleCommand("${apiClientPath}/.generator/${apiName}", 'gradle', 'create-wrapper')
         println("generateApiClientJar::create::gradle::wrapper::end")
 
         println("generateApiClientJar::create::client::jar::start")
-        runGradleCommand("${apiClientPath}/.generator/${apiName}", 'jar')
+        runGradleCommand("${apiClientPath}/.generator/${apiName}", './gradlew', 'jar')
         println("generateApiClientJar::create::client::jar::end")
 
         println("generateApiClientJar::end")
@@ -24,13 +24,13 @@ tasks.register('createApiClientClasses', JavaExec) {
     args = []
 }
 
-def runGradleCommand(String workingDirectory, String task) {
+def runGradleCommand(String workingDirectory, String gradleType, String task) {
     exec {
         workingDir = file(workingDirectory)
         if (System.getProperty('os.name').toLowerCase().contains('windows')) {
-            commandLine 'cmd', '/c', "gradle ${task}"
+            commandLine 'cmd', '/c', "${gradleType} ${task}"
         } else {
-            commandLine 'bash', '-c', "gradle ${task}"
+            commandLine 'bash', '-c', "${gradleType} ${task}"
         }
     }
 }
