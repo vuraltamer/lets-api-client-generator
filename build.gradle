@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.github.lets.apis.client.generator'
-version = '1.0.0'
+version = '1.0.5'
 
 java {
     toolchain {
@@ -41,6 +41,7 @@ dependencyManagement {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'org.reflections:reflections:0.10.2'

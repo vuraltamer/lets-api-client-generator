@@ -10,10 +10,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -43,7 +40,7 @@ public class SuperClassNode {
     }
 
     private static SuperClassNode createFromType(Type type) {
-        SuperClassNode parameterNode = new SuperClassNode(type);
+        SuperClassNode parameterNode = createBasicNode(type);
         parameterNode.setView(setBasicClassView(type));
         parameterNode.setImports(setBasicClassImports(type));
         return parameterNode;
@@ -98,9 +95,20 @@ public class SuperClassNode {
                 parameterNode.childList.add(childParameterNode);
                 continue;
             }
+            if (Util.isEntity(actualTypeArgument)) {
+                parameterNode.childList.add(new SuperClassNode(Object.class));
+                continue;
+            }
             parameterNode.childList.add(new SuperClassNode(actualTypeArgument));
         }
         return parameterNode;
+    }
+
+    private static SuperClassNode createBasicNode(Type type) {
+        if (Util.isEntity(type)) {
+            return new SuperClassNode(Object.class);
+        }
+        return new SuperClassNode(type);
     }
 
     private static String setBasicClassView(Type type) {

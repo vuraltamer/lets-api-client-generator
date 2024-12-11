@@ -72,6 +72,9 @@ public class ControllerModelDetail {
 
     public String getImportsContent() {
         Set<ImportDetail> imports = ImportDetail.create(CallerConstants.MODEL_IMPORTS);
+        if (this.getSuperClass() != null && this.getSuperClass().getImports() != null) {
+            imports.addAll(this.getSuperClass().getImports());
+        }
         imports.addAll(getVariableImports());
         return imports.stream()
                 .sorted(Comparator.comparing(ImportDetail::getFullName))

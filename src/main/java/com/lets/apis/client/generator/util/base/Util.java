@@ -8,6 +8,7 @@ import com.lets.apis.client.generator.constants.CallerConstants;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Collection;
 
 import static com.lets.apis.client.generator.constants.CallerConstants.*;
@@ -19,9 +20,18 @@ public class Util {
     public static boolean isNonControllerClass(Class clazz) {
         return clazz.getPackageName().startsWith("java.") ||
                 clazz.getPackageName().startsWith("javax.") ||
+                clazz.getPackageName().startsWith("jakarta.") ||
                 clazz.getPackageName().startsWith("org.spring") ||
                 clazz.getPackageName().startsWith("lombok") ||
                 clazz.getPackageName().startsWith("org.dozer");
+    }
+
+
+    public static boolean isEntity(Type actualTypeArgument) {
+        return Arrays.stream(((Class) actualTypeArgument).getAnnotations())
+                .anyMatch(arg -> arg.annotationType().getSimpleName().equals("Entity")
+                        || arg.annotationType().getSimpleName().equals("Table")
+                        || arg.annotationType().getSimpleName().equals("Document"));
     }
 
     public static String getPackageName(Class clazz) {
