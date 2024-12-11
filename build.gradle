@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.github.lets.apis.client.generator'
-version = '1.0.5'
+version = '1.0.0'
 
 java {
     toolchain {
