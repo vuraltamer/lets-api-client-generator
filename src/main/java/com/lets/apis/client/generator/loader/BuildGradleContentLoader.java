@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class BuildGradleContentLoader {
 
     public static String load(CallerProperties callerProperties) {
-        return new String(TemplateReader.content("build-gradle"))
+        return TemplateReader.content("build-gradle")
                 .replace("{JAR_NAME}", callerProperties.getApiName())
                 .replace("{API_VERSION}", callerProperties.getApiVersion())
                 .replace("{IMPLEMENTATIONS}", getImplementations(callerProperties))
@@ -25,8 +25,9 @@ public class BuildGradleContentLoader {
 
     private static String getImplementations(List<String> dependencies) {
         return dependencies.stream()
-                .map(dependency -> new String("\timplementation '{DEPENDENCY}'")
-                        .replace("{DEPENDENCY}", dependency))
+                .map(dependency -> "\timplementation '{DEPENDENCY}'"
+                                        .replace("{DEPENDENCY}", dependency)
+                )
                 .collect(Collectors.joining("\n"));
     }
 }

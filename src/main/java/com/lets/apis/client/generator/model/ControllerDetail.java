@@ -62,7 +62,7 @@ public class ControllerDetail extends ControllerContentLoader {
 
     public String getPathView() {
         if (this.path == null || this.path.length == 0) {
-            return ApiConstants.EMPTY;
+            return "path = \"\"";
         } else if (this.path.length == 1) {
             return "path = \"{PATH}\""
                     .replace("{PATH}", this.path[0]);

@@ -1,6 +1,5 @@
 package com.lets.apis.client.generator.loader;
 
-import com.lets.apis.client.generator.constants.CallerConstants;
 import com.lets.apis.client.generator.model.ControllerModelDetail;
 import com.lets.apis.client.generator.template.TemplateReader;
 import com.lets.apis.client.generator.util.base.Util;

@@ -73,7 +73,7 @@ public class CallerProperties {
     }
 
     public void setDependencies(List<String> dependencies) {
-        this.dependencies = Util.isEmpty(dependencies) ? EMPTY_LIST : dependencies;;
+        this.dependencies = Util.isEmpty(dependencies) ? EMPTY_LIST : dependencies;
     }
 
     public void setApiVersion(String apiVersion) {

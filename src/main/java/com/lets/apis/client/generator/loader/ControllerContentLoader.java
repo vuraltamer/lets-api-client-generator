@@ -15,7 +15,7 @@ public class ControllerContentLoader {
     private static final String FEIGN_API_NAME = PropertyReader.properties().getApiName();
 
     public static String create(ControllerDetail controllerDetail) {
-        return new String(TemplateReader.content("feign-client"))
+        return TemplateReader.content("feign-client")
                 .replace("{PACKAGE}", controllerDetail.getPackageName())
                 .replace("{API_NAME}", getFeignApiName(controllerDetail.getClassName()))
                 .replace("{FEIGN_URL}", getFeignUrl())
