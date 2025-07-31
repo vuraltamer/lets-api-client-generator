@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.github.lets.apis.client.generator'
-version = '1.0.0'
+version = '1.0.3'
 
 java {
     toolchain {
@@ -61,8 +61,9 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/vuraltamer/lets-api-client-generator")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-                password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+                println "gpr.token = ${project.findProperty("gpr.token")}"
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.token")
             }
         }
     }
