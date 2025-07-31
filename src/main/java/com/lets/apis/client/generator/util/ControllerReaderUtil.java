@@ -1,8 +1,8 @@
 package com.lets.apis.client.generator.util;
 
 import com.lets.apis.client.generator.model.ApiDetail;
-import com.lets.apis.client.generator.properties.CallerProperties;
-import com.lets.apis.client.generator.properties.PropertyReader;
+import com.lets.apis.client.generator.properties.model.CallerProperties;
+import com.lets.apis.client.generator.properties.ApplicationPropertyReader;
 import com.lets.apis.client.generator.util.base.Util;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -27,7 +27,7 @@ public class ControllerReaderUtil {
     }
 
     private static String getScanPackage() {
-        CallerProperties properties = PropertyReader.properties();
+        CallerProperties properties = ApplicationPropertyReader.properties();
         return properties.getScanPackage();
     }
 }

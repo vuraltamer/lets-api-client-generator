@@ -1,6 +1,6 @@
 package com.lets.apis.client.generator.loader;
 
-import com.lets.apis.client.generator.properties.CallerProperties;
+import com.lets.apis.client.generator.properties.model.CallerProperties;
 import com.lets.apis.client.generator.template.TemplateReader;
 
 public class SettingsGradleContentLoader {

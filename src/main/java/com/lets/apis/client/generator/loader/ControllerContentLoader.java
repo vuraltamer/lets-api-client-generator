@@ -3,7 +3,7 @@ package com.lets.apis.client.generator.loader;
 import com.lets.apis.client.generator.model.ControllerDetail;
 import com.lets.apis.client.generator.model.ControllerMethodDetail;
 import com.lets.apis.client.generator.model.node.ParameterNode;
-import com.lets.apis.client.generator.properties.PropertyReader;
+import com.lets.apis.client.generator.properties.ApplicationPropertyReader;
 import com.lets.apis.client.generator.constants.CallerConstants;
 import com.lets.apis.client.generator.template.TemplateReader;
 
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class ControllerContentLoader {
 
-    private static final String FEIGN_API_NAME = PropertyReader.properties().getApiName();
+    private static final String FEIGN_API_NAME = ApplicationPropertyReader.properties().getApiName();
 
     public static String create(ControllerDetail controllerDetail) {
         return TemplateReader.content("feign-client")

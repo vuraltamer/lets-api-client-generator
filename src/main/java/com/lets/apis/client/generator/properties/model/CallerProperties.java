@@ -1,4 +1,4 @@
-package com.lets.apis.client.generator.properties;
+package com.lets.apis.client.generator.properties.model;
 
 import com.lets.apis.client.generator.constants.ApiConstants;
 import com.lets.apis.client.generator.util.base.Util;

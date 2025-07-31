@@ -1,8 +1,7 @@
 package com.lets.apis.client.generator.util.base;
 
 import com.lets.apis.client.generator.constants.ApiConstants;
-import com.lets.apis.client.generator.model.ImportDetail;
-import com.lets.apis.client.generator.properties.PropertyReader;
+import com.lets.apis.client.generator.properties.ApplicationPropertyReader;
 import com.lets.apis.client.generator.constants.CallerConstants;
 
 import java.lang.reflect.Field;
@@ -15,7 +14,7 @@ import static com.lets.apis.client.generator.constants.CallerConstants.*;
 
 public class Util {
 
-    private static final String REMOVED_PATH = PropertyReader.properties().getScanPackage() + "." ;
+    private static final String REMOVED_PATH = ApplicationPropertyReader.properties().getScanPackage() + "." ;
 
     public static boolean isNonControllerClass(Class clazz) {
         return clazz.getPackageName().startsWith("java.") ||

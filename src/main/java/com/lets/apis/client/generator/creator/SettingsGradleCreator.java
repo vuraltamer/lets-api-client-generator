@@ -2,7 +2,7 @@ package com.lets.apis.client.generator.creator;
 
 import com.lets.apis.client.generator.loader.SettingsGradleContentLoader;
 import com.lets.apis.client.generator.model.GradleDetail;
-import com.lets.apis.client.generator.properties.CallerProperties;
+import com.lets.apis.client.generator.properties.model.CallerProperties;
 
 public class SettingsGradleCreator {
 

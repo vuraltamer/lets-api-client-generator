@@ -1,9 +1,11 @@
 package com.lets.apis.client.generator.properties;
 
+import com.lets.apis.client.generator.properties.model.CallerProperties;
+
 import java.io.*;
 import java.util.*;
 
-public class PropertyReader {
+public class ApplicationPropertyReader {
 
     private static CallerProperties callerProperties;
 
