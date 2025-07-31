@@ -23,7 +23,7 @@ public class DependencyPropertyReader {
 
     public static DependencyProperties read() {
         Properties properties = getProperties("dependencies.properties");
-        Set<DependencyProperties.Version> versions = IntStream.rangeClosed(11, 21)
+        Set<DependencyProperties.Version> versions = IntStream.rangeClosed(11, 24)
                 .mapToObj(javaVer ->
                         DependencyProperties.Version.builder()
                                 .java(String.valueOf(javaVer))
