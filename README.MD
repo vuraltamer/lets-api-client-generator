@@ -39,8 +39,6 @@ apply from: 'https://raw.githubusercontent.com/vuraltamer/lets-api-client-genera
 apply from: 'generate-client.gradle'
 ```
 
----
-
 ## ⚙️ Configuration
 
 To customize the generation, create a file named `caller-config.properties` under:
@@ -124,6 +122,37 @@ gradle generateApiClientJar
 ---
 
 ## 🔍 Example Project
+
+
+## 📦 Bean definition for client jar usage
+
+```groovy
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'io.github.openfeign:feign-okhttp' // For patchMapping usage
+    implementation 'generated-fein-client'
+```
+
+```java
+
+    @EnableFeignClients // For your configuration
+    
+    @Bean // For patchMapping usage
+    public Client feignClient() {
+        return new OkHttpClient(new okhttp3.OkHttpClient());
+    }
+
+    @Bean // For Multipart file usage
+    public Encoder feignFormEncoder() {
+        return new SpringFormEncoder(new SpringEncoder(messageConverters()));
+    }
+
+    @Bean("feignHttpMessageConverters")
+    public ObjectFactory<HttpMessageConverters> messageConverters() {
+        return () -> new HttpMessageConverters();
+    }
+```
+
+---
 
 You can try out the generator with the example project below:
 
