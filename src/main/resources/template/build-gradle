@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '{SPRING_FRAMEWORK_VERSION}'
     id 'io.spring.dependency-management' version '{DEPENDENCY_MANAGEMENT_VERSION}'
+    id 'maven-publish'
 }
 
 group = 'com.lets.apis.client.generator'
