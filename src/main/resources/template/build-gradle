@@ -33,6 +33,33 @@ repositories {
     mavenCentral()
 }
 
+tasks.register('create-wrapper', Wrapper) {
+    gradleVersion = '{GRADLE_VERSION}'
+    distributionType = Wrapper.DistributionType.ALL
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.findProperty("groupId")
+            artifactId = project.findProperty("artifactId")
+            version = project.findProperty("version")
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri(project.findProperty("repository"))
+            allowInsecureProtocol = project.findProperty("allowInsecure")?.toBoolean() ?: false
+            credentials {
+                username = project.findProperty("user")
+                password = project.findProperty("password")
+            }
+        }
+    }
+}
+
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:{SPRING-CLOUD-DEPENDENCIES}"
@@ -45,9 +72,4 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     compileOnly 'org.projectlombok:lombok:1.18.28'
-}
-
-tasks.register('create-wrapper', Wrapper) {
-    gradleVersion = '{GRADLE_VERSION}'
-    distributionType = Wrapper.DistributionType.ALL
 }

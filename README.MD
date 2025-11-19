@@ -53,9 +53,6 @@ src/main/resources/caller-config.properties
 # Java version for the generated client (optional, default: 17)
 com.lets.apis.client.generator.java-version=17
 
-# Gradle wrapper version for generated build (optional, default: 8.5)
-com.lets.apis.client.generator.gradle-version=8.5
-
 # Name of the generated API client (required)
 com.lets.apis.client.generator.api-name=person-service-client
 
