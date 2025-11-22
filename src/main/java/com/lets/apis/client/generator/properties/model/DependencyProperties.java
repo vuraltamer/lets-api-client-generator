@@ -2,11 +2,7 @@ package com.lets.apis.client.generator.properties.model;
 
 import lombok.*;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Getter
 @Setter

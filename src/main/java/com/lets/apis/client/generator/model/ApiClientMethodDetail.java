@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ControllerMethodDetail {
+public class ApiClientMethodDetail {
     private Method method;
     private AnnotationNode annotation;
     private ReturnTypeNode returnType;

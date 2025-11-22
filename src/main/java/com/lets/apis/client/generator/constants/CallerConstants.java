@@ -17,7 +17,7 @@ public class CallerConstants {
 
     public static final String PARAMETERIZED = "{RAW}<{CONTENT}>";
 
-    public static final String BASE_PATH = "com.lets.apis.client.generator.";
+    public static final String BASE_PATH = "com.lets.apis.client.generator";
 
     public static final String CONTROLLER = ".controller";
 

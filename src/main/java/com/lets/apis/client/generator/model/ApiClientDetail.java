@@ -1,10 +1,9 @@
 package com.lets.apis.client.generator.model;
 
 import com.lets.apis.client.generator.creator.ControllerPathCreator;
-import com.lets.apis.client.generator.constants.ApiConstants;
 import com.lets.apis.client.generator.creator.ControllerClassesCreator;
-import com.lets.apis.client.generator.loader.ControllerContentLoader;
-import com.lets.apis.client.generator.creator.ControllerMethodCreator;
+import com.lets.apis.client.generator.loader.ApiClientContentLoader;
+import com.lets.apis.client.generator.creator.ApiClientMethodCreator;
 import com.lets.apis.client.generator.util.base.Util;
 import com.lets.apis.client.generator.constants.CallerConstants;
 import lombok.Getter;
@@ -17,30 +16,30 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class ControllerDetail extends ControllerContentLoader {
+public class ApiClientDetail extends ApiClientContentLoader {
     private Class clazz;
     private String className;
     private String packageName;
     private String fullName;
     private String[] path;
-    private List<ControllerMethodDetail> methods;
+    private List<ApiClientMethodDetail> methods;
     private Set<Class> classes;
     private String content;
 
-    public ControllerDetail(Class clazz) {
+    public ApiClientDetail(Class clazz) {
         this.clazz = clazz;
         this.className = Util.getControllerName(clazz);
         this.packageName = Util.getPackageName(clazz);
         this.fullName = Util.getControllerFullName(clazz);
     }
 
-    public static ControllerDetail create(Class clazz) {
-        ControllerDetail controllerDetail = new ControllerDetail(clazz);
-        controllerDetail.setPath(ControllerPathCreator.create(controllerDetail));
-        controllerDetail.setMethods(ControllerMethodCreator.create(controllerDetail));
-        controllerDetail.setClasses(ControllerClassesCreator.create(controllerDetail));
-        controllerDetail.setContent(ControllerContentLoader.create(controllerDetail));
-        return controllerDetail;
+    public static ApiClientDetail create(Class clazz) {
+        ApiClientDetail apiClientDetail = new ApiClientDetail(clazz);
+        apiClientDetail.setPath(ControllerPathCreator.create(apiClientDetail));
+        apiClientDetail.setMethods(ApiClientMethodCreator.create(apiClientDetail));
+        apiClientDetail.setClasses(ControllerClassesCreator.create(apiClientDetail));
+        apiClientDetail.setContent(ApiClientContentLoader.create(apiClientDetail));
+        return apiClientDetail;
     }
 
     public String getImports() {

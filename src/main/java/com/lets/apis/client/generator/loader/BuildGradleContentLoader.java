@@ -4,7 +4,9 @@ import com.lets.apis.client.generator.constants.ApiConstants;
 import com.lets.apis.client.generator.properties.model.CallerProperties;
 import com.lets.apis.client.generator.properties.model.DependencyProperties;
 import com.lets.apis.client.generator.template.TemplateReader;
+import com.lets.apis.client.generator.util.base.Util;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,8 +15,8 @@ public class BuildGradleContentLoader {
     public static String load(CallerProperties callerProperties, DependencyProperties dependencyProperties) {
         DependencyProperties.Version dependencyVersions = dependencyProperties.getVersion(callerProperties.getJavaVersion());
         return TemplateReader.content("build-gradle")
-                .replace("{JAR_NAME}", callerProperties.getApiName())
-                .replace("{API_VERSION}", callerProperties.getApiVersion())
+                .replace("{JAR_NAME}", callerProperties.getClientName())
+                .replace("{API_VERSION}", callerProperties.getClientVersion())
                 .replace("{IMPLEMENTATIONS}", getImplementations(callerProperties))
                 .replace("{JAVA_VERSION}", callerProperties.getJavaVersion())
                 .replace("{SPRING_FRAMEWORK_VERSION}", dependencyVersions.getSpringBoot())
@@ -24,15 +26,22 @@ public class BuildGradleContentLoader {
     }
 
     private static String getImplementations(CallerProperties callerProperties) {
-        return callerProperties.getDependencies() == null ? ApiConstants.EMPTY
-                : getImplementations(callerProperties.getDependencies());
+        return callerProperties.getClientDependencies() == null ? ApiConstants.EMPTY
+                : getImplementations(callerProperties.getClientDependencies());
     }
 
-    private static String getImplementations(List<String> dependencies) {
-        return dependencies.stream()
+    private static String getImplementations(String dependencies) {
+        if (Util.isEmpty(dependencies)) {
+            return ApiConstants.EMPTY;
+        }
+        List<String> dependencyList = Arrays.asList(dependencies.split(","));
+        String initRow = "implementation '{DEPENDENCY}'".replace("{DEPENDENCY}", dependencyList.get(0));
+        String otherRows = dependencyList.stream()
+                .skip(1)
                 .map(dependency -> "\timplementation '{DEPENDENCY}'"
-                                        .replace("{DEPENDENCY}", dependency)
+                        .replace("{DEPENDENCY}", dependency)
                 )
                 .collect(Collectors.joining("\n"));
+        return initRow + (otherRows.isEmpty() ? "" : System.lineSeparator() + otherRows);
     }
 }

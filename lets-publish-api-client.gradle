@@ -1,0 +1,39 @@
+task publishApiClient(type: Exec) {
+    def properties = new PublishProperties(
+        clientPath:     project.findProperty("clientPath") ?: projectDir.absolutePath,
+        clientName:     project.findProperty("clientName") ?: "generator-feign-client",
+        groupId:        project.findProperty("groupId") ?: "com.lets.apis.client",
+        artifactId:     project.findProperty("artifactId") ?: "generator-feign-client",
+        version:        project.findProperty("version") ?: "1.0.0.0",
+        repository:     project.findProperty("repository") ?: "",
+        user:           project.findProperty("user") ?: "",
+        password:       project.findProperty("password") ?: "",
+        allowInsecure:  project.findProperty("allowInsecure") ?: true
+    )
+
+    def rootGradlew = "${project.projectDir}/gradlew"
+    def clientProjectDir = "$properties.clientPath/.generator/$properties.clientName"
+
+    commandLine rootGradlew,
+            "publish",
+            "--project-dir",clientProjectDir,
+            "-PgroupId=$properties.groupId",
+            "-PartifactId=$properties.artifactId",
+            "-Pversion=$properties.version",
+            "-Prepository=$properties.repository",
+            "-Puser=$properties.user",
+            "-Ppassword=$properties.password",
+            "-PallowInsecure=$properties.allowInsecure"
+}
+
+class PublishProperties {
+    String clientName
+    String clientPath
+    String groupId
+    String artifactId
+    String version
+    String repository
+    String user
+    String password
+    String allowInsecure
+}

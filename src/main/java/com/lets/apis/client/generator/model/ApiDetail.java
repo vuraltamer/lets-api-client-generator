@@ -11,7 +11,7 @@ import java.util.Set;
 public class ApiDetail {
     String directoryPath;
     Set<Class> controllerClass;
-    List<ControllerDetail> controllerDetails;
-    Set<ControllerModelDetail> modelDetails;
+    List<ApiClientDetail> apiClientDetails;
+    Set<ApiClientModelDetail> modelDetails;
     GradleDetail gradleDetail;
 }

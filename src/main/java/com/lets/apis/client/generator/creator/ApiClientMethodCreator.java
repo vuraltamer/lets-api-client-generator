@@ -1,7 +1,7 @@
 package com.lets.apis.client.generator.creator;
 
-import com.lets.apis.client.generator.model.ControllerDetail;
-import com.lets.apis.client.generator.model.ControllerMethodDetail;
+import com.lets.apis.client.generator.model.ApiClientDetail;
+import com.lets.apis.client.generator.model.ApiClientMethodDetail;
 import com.lets.apis.client.generator.model.node.AnnotationNode;
 import com.lets.apis.client.generator.model.node.ParameterNode;
 import com.lets.apis.client.generator.model.node.ReturnTypeNode;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ControllerMethodCreator {
+public class ApiClientMethodCreator {
 
     private static final List<Class<? extends Annotation>> REQUEST_METHOD_ANNOTATIONS = Arrays.asList(
             GetMapping.class,
@@ -24,14 +24,14 @@ public class ControllerMethodCreator {
             RequestMapping.class
     );
 
-    public static List<ControllerMethodDetail> create(ControllerDetail controllerDetail) {
-        List<ControllerMethodDetail> methodList = new ArrayList<>();
-        Method[] methods = controllerDetail.getClazz().getDeclaredMethods();
+    public static List<ApiClientMethodDetail> create(ApiClientDetail apiClientDetail) {
+        List<ApiClientMethodDetail> methodList = new ArrayList<>();
+        Method[] methods = apiClientDetail.getClazz().getDeclaredMethods();
         for (Method method : methods) {
             Annotation requestMethodAnnotation = findRequestMethodAnnotation(method.getAnnotations());
             if (requestMethodAnnotation != null) {
                 methodList.add(
-                        ControllerMethodDetail.builder()
+                        ApiClientMethodDetail.builder()
                                 .method(method)
                                 .annotation(AnnotationNode.create(requestMethodAnnotation))
                                 .returnType(ReturnTypeNode.create(method))

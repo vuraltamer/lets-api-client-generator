@@ -41,20 +41,20 @@ tasks.register('create-wrapper', Wrapper) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = project.findProperty("groupId")
-            artifactId = project.findProperty("artifactId")
-            version = project.findProperty("version")
+            groupId = project.findProperty("groupId") ?: ""
+            artifactId = project.findProperty("artifactId") ?: ""
+            version = project.findProperty("version") ?: ""
             from components.java
         }
     }
 
     repositories {
         maven {
-            url = uri(project.findProperty("repository"))
+            url = uri(project.findProperty("repository") ?: "")
             allowInsecureProtocol = project.findProperty("allowInsecure")?.toBoolean() ?: false
             credentials {
-                username = project.findProperty("user")
-                password = project.findProperty("password")
+                username = project.findProperty("user") ?: ""
+                password = project.findProperty("password") ?: ""
             }
         }
     }
@@ -68,8 +68,8 @@ dependencyManagement {
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    {IMPLEMENTATIONS}
     implementation 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     compileOnly 'org.projectlombok:lombok:1.18.28'
+    {IMPLEMENTATIONS}
 }

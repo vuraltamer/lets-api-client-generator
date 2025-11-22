@@ -1,8 +1,6 @@
 package com.lets.apis.client.generator.util;
 
 import com.lets.apis.client.generator.model.ApiDetail;
-import com.lets.apis.client.generator.properties.model.CallerProperties;
-import com.lets.apis.client.generator.properties.ApplicationPropertyReader;
 import com.lets.apis.client.generator.util.base.Util;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -18,16 +16,11 @@ public class ControllerReaderUtil {
     }
 
     public static Set<Class> getControllers() {
-        final Reflections reflections = new Reflections(getScanPackage(), Scanners.TypesAnnotated);
+        final Reflections reflections = new Reflections(ApiBasePackageUtil.get(), Scanners.TypesAnnotated);
         final Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(RestController.class);
         if (Util.isEmpty(annotatedClasses)) {
             throw new RuntimeException("ControllerReaderUtil::getControllers::controller not found. check scan package");
         }
         return new HashSet<>(annotatedClasses);
-    }
-
-    private static String getScanPackage() {
-        CallerProperties properties = ApplicationPropertyReader.properties();
-        return properties.getScanPackage();
     }
 }

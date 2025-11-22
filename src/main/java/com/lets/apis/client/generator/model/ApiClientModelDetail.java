@@ -1,7 +1,7 @@
 package com.lets.apis.client.generator.model;
 
 import com.lets.apis.client.generator.constants.ApiConstants;
-import com.lets.apis.client.generator.loader.ControllerModelContentLoader;
+import com.lets.apis.client.generator.loader.ApiClientModelContentLoader;
 import com.lets.apis.client.generator.model.node.SuperClassNode;
 import com.lets.apis.client.generator.model.node.TypeParametersNode;
 import com.lets.apis.client.generator.model.node.VariableNode;
@@ -19,7 +19,7 @@ import static com.lets.apis.client.generator.util.base.Util.isStatic;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ControllerModelDetail {
+public class ApiClientModelDetail {
     private Class clazz;
     private SuperClassNode superClass;
     private TypeParametersNode typeParameters;
@@ -29,20 +29,20 @@ public class ControllerModelDetail {
     private String fullName;
     private String content;
 
-    public ControllerModelDetail(Class clazz) {
+    public ApiClientModelDetail(Class clazz) {
         this.clazz  = clazz;
         this.className = clazz.getSimpleName();
         this.packageName = Util.getPackageName(clazz);
         this.fullName = Util.getFullName(clazz);
     }
 
-    public static ControllerModelDetail create(Class clazz) {
-        ControllerModelDetail controllerModelDetail = new ControllerModelDetail(clazz);
-        controllerModelDetail.setTypeParameters(TypeParametersNode.create(clazz));
-        controllerModelDetail.setSuperClass(SuperClassNode.create(clazz));
-        controllerModelDetail.setVariables(createVariables(clazz));
-        controllerModelDetail.setContent(ControllerModelContentLoader.load(controllerModelDetail));
-        return controllerModelDetail;
+    public static ApiClientModelDetail create(Class clazz) {
+        ApiClientModelDetail apiClientModelDetail = new ApiClientModelDetail(clazz);
+        apiClientModelDetail.setTypeParameters(TypeParametersNode.create(clazz));
+        apiClientModelDetail.setSuperClass(SuperClassNode.create(clazz));
+        apiClientModelDetail.setVariables(createVariables(clazz));
+        apiClientModelDetail.setContent(ApiClientModelContentLoader.load(apiClientModelDetail));
+        return apiClientModelDetail;
     }
 
     private static List<VariableNode> createVariables(Class clazz) {
@@ -61,7 +61,7 @@ public class ControllerModelDetail {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ControllerModelDetail that = (ControllerModelDetail) o;
+        ApiClientModelDetail that = (ApiClientModelDetail) o;
         return Objects.equals(className, that.className) && Objects.equals(packageName, that.packageName);
     }
 

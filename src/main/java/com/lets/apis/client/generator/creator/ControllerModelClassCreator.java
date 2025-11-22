@@ -1,7 +1,7 @@
 package com.lets.apis.client.generator.creator;
 
 import com.lets.apis.client.generator.model.ApiDetail;
-import com.lets.apis.client.generator.model.ControllerDetail;
+import com.lets.apis.client.generator.model.ApiClientDetail;
 import com.lets.apis.client.generator.util.base.Util;
 import com.lets.apis.client.generator.model.node.ParameterNode;
 
@@ -15,13 +15,13 @@ public class ControllerModelClassCreator {
 
     public static Set<Class> create(ApiDetail apiDetail) {
         Set<Class> clazzList = new HashSet<>();
-        apiDetail.getControllerDetails().stream()
+        apiDetail.getApiClientDetails().stream()
                 .forEach(controllerDetail -> loadApiClasses(controllerDetail, clazzList));
         return clazzList;
     }
 
-    private static void loadApiClasses(ControllerDetail controllerDetail, Set<Class> clazzList) {
-        controllerDetail.getClasses().stream()
+    private static void loadApiClasses(ApiClientDetail apiClientDetail, Set<Class> clazzList) {
+        apiClientDetail.getClasses().stream()
                 .forEach(clazz -> loadApiClasses(clazz, clazzList));
     }
 

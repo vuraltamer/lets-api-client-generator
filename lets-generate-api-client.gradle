@@ -1,0 +1,47 @@
+import groovy.json.JsonOutput
+
+tasks.register("generateApiClient", JavaExec) {
+    def properties = new ApiClientProperties(
+            clientName:         project.findProperty("clientName") ?: "generator-feign-client",
+            clientPath:         project.findProperty("clientPath") ?: projectDir.absolutePath,
+            clientVersion:      project.findProperty("clientVersion") ?: "1.0.0.0",
+            javaVersion:        project.findProperty("javaVersion") ?: "17",
+            clientDependencies: project.findProperty("clientDependencies") ?: ""
+    )
+
+    println("generateApiClientJar::createApiClientClasses::start")
+    createApiClientClasses(delegate, properties)
+    println("generateApiClientJar::createApiClientClasses::end")
+
+    doLast {
+        println("generateApiClient::start")
+        runGradleCommand("$properties.clientPath/.generator/$properties.clientName", 'gradle', 'create-wrapper')
+        runGradleCommand("$properties.clientPath/.generator/$properties.clientName", './gradlew', 'jar')
+        println("generateApiClient::end")
+    }
+}
+
+def createApiClientClasses(JavaExec task, ApiClientProperties properties) {
+    task.mainClass = 'com.lets.apis.client.generator.ApiClientGenerator'
+    task.classpath = sourceSets.main.runtimeClasspath
+    task.args JsonOutput.toJson(properties)
+}
+
+def runGradleCommand(String workingDirectory, String gradleType, String task) {
+    exec {
+        workingDir = file(workingDirectory)
+        if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+            commandLine 'cmd', '/c', "${gradleType} ${task}"
+        } else {
+            commandLine 'bash', '-c', "${gradleType} ${task}"
+        }
+    }
+}
+
+class ApiClientProperties {
+    String clientName
+    String clientPath
+    String clientVersion
+    String javaVersion
+    String clientDependencies
+}

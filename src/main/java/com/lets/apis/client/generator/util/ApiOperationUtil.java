@@ -7,8 +7,8 @@ public class ApiOperationUtil {
     public static ApiDetail getApiDetail() {
         ApiDetail apiDetail = new ApiDetail();
         ControllerReaderUtil.load(apiDetail); // controller classes load edilir.
-        ControllerDetailUtil.load(apiDetail); // controller details load edilir
-        ControllerModelUtil.load(apiDetail); //  model details load edilir.
+        ApiClientDetailUtil.load(apiDetail); // api client details load edilir
+        ApiClientModelUtil.load(apiDetail); //  api client models load edilir.
         GradleDetailUtil.load(apiDetail);
         return apiDetail;
     }

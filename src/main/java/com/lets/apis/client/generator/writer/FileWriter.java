@@ -1,15 +1,15 @@
 package com.lets.apis.client.generator.writer;
 
 import com.lets.apis.client.generator.model.ApiDetail;
-import com.lets.apis.client.generator.model.ControllerDetail;
-import com.lets.apis.client.generator.model.ControllerModelDetail;
+import com.lets.apis.client.generator.model.ApiClientDetail;
+import com.lets.apis.client.generator.model.ApiClientModelDetail;
 import com.lets.apis.client.generator.model.GradleDetail;
 import com.lets.apis.client.generator.writer.util.FileUtil;
 
 public class FileWriter {
 
     public static void write(ApiDetail apiDetail) {
-        apiDetail.getControllerDetails().stream()
+        apiDetail.getApiClientDetails().stream()
                 .forEach(controllerDetail -> write(apiDetail.getDirectoryPath(), controllerDetail));
 
         apiDetail.getModelDetails().stream()
@@ -18,13 +18,13 @@ public class FileWriter {
         write(apiDetail.getDirectoryPath(), apiDetail.getGradleDetail());
     }
 
-    private static void write(String directoryPath, ControllerModelDetail detail) {
+    private static void write(String directoryPath, ApiClientModelDetail detail) {
         String generatePath = directoryPath + "src/main/java/" + detail.getPackageName().replace(".", "/");
         String className = detail.getClassName() + ".java";
         FileUtil.write(generatePath, detail.getContent(), className);
     }
 
-    private static void write(String directoryPath, ControllerDetail detail) {
+    private static void write(String directoryPath, ApiClientDetail detail) {
         String generatePath = directoryPath + "src/main/java/" + detail.getPackageName().replace(".", "/");
         String className = detail.getClassName() + ".java";
         FileUtil.write(generatePath, detail.getContent(), className);

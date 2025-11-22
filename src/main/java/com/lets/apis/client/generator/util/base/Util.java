@@ -1,8 +1,8 @@
 package com.lets.apis.client.generator.util.base;
 
 import com.lets.apis.client.generator.constants.ApiConstants;
-import com.lets.apis.client.generator.properties.ApplicationPropertyReader;
 import com.lets.apis.client.generator.constants.CallerConstants;
+import com.lets.apis.client.generator.util.ApiBasePackageUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -14,8 +14,6 @@ import static com.lets.apis.client.generator.constants.CallerConstants.*;
 
 public class Util {
 
-    private static final String REMOVED_PATH = ApplicationPropertyReader.properties().getScanPackage() + "." ;
-
     public static boolean isNonControllerClass(Class clazz) {
         return clazz.getPackageName().startsWith("java.") ||
                 clazz.getPackageName().startsWith("javax.") ||
@@ -24,7 +22,6 @@ public class Util {
                 clazz.getPackageName().startsWith("lombok") ||
                 clazz.getPackageName().startsWith("org.dozer");
     }
-
 
     public static boolean isEntity(Type actualTypeArgument) {
         return Arrays.stream(((Class) actualTypeArgument).getAnnotations())
@@ -42,14 +39,14 @@ public class Util {
                                                     .toLowerCase()
                                                     .replace(CONTROLLER, FEIGN)
                                                     .replace(CONTROLLERS, FEIGN)
-                                                    .replaceFirst(REMOVED_PATH, ApiConstants.EMPTY);
+                                                    .replaceFirst(ApiBasePackageUtil.get(), ApiConstants.EMPTY);
         }
 
         return CallerConstants.BASE_PATH
                 + clazz.getPackageName()
                     .replace(CONTROLLER, FEIGN)
                     .replace(CONTROLLERS, FEIGN)
-                    .replaceFirst(REMOVED_PATH, ApiConstants.EMPTY);
+                    .replaceFirst(ApiBasePackageUtil.get(), ApiConstants.EMPTY);
     }
 
     public static String getFullName(Class clazz) {
@@ -65,7 +62,7 @@ public class Util {
             return clazz.getPackageName();
         }
         return CallerConstants.BASE_PATH + clazz.getName()
-                .replaceFirst(REMOVED_PATH, ApiConstants.EMPTY)
+                .replaceFirst(ApiBasePackageUtil.get(), ApiConstants.EMPTY)
                 .replaceFirst("Controller", "Client");
     }
 
