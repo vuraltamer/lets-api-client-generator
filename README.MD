@@ -11,111 +11,84 @@
 Add the following to your project's `build.gradle`:
 
 ```groovy
-repositories {
-    mavenCentral()
-    maven {
-        url = uri("https://maven.pkg.github.com/vuraltamer/lets-api-client-generator")
-        credentials {
-            username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
-            password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
-        }
-    }
+plugins {
+    id 'io.github.lets.apis.client.generator' version '1.0.0'
 }
 
 dependencies {
-    implementation 'com.lets.apis.client.generator:lets-api-client-generator:1.0.0'
+    implementation 'io.github.lets.apis.client.generator:common:1.0.0'
 }
 ```
-
-Then apply the Gradle plugin:
+Add the following to your project's `settings.gradle`:
 
 ```groovy
-apply from: 'https://raw.githubusercontent.com/vuraltamer/lets-api-client-generator/refs/heads/master/doc/generate-client.gradle'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            url = uri("https://maven.pkg.github.com/vuraltamer/lets-api-client-generator")
+            credentials {
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.token")
+            }
+        }
+    }
+}
 ```
 
 > Alternatively, you can download the file and apply it locally:
 
 ```groovy
-apply from: 'generate-client.gradle'
+apply from: 'lets-client-generator/plugin/src/main/resources/generator/lets-generate-api-client.gradle'
+apply from: 'lets-client-generator/plugin/src/main/resources/generator/lets-publish-api-client.gradle'
 ```
 
-## ⚙️ Configuration
-
-To customize the generation, create a file named `caller-config.properties` under:
-
-```
-src/main/resources/caller-config.properties
-```
-
-### Example: `caller-config.properties`
+## ⚙️ Lets try
 
 ```properties
-# Java version for the generated client (optional, default: 17)
-com.lets.apis.client.generator.java-version=17
+gradle generateApiClient \
+    -PclientName=user-feign-client \
+    -PclientPath= \
+    -PclientVersion=1.0.0.0 \
+    -PjavaVersion=17 \
+    -PclientDependencies=com.sample.repo:1.0.0,com.sample.repo:1.0.1
 
-# Gradle wrapper version for generated build (optional, default: 8.5)
-com.lets.apis.client.generator.gradle-version=8.5
-
-# Name of the generated API client (required)
-com.lets.apis.client.generator.api-name=person-service-client
-
-# Output path for generated files (optional, default: current project directory)
-com.lets.apis.client.generator.api-client-path=/temp
-
-# Package to scan for service classes (optional, defaults to full scan)
-com.lets.apis.client.generator.scan-package=com.project.main
-
-# Third-party dependencies required during generation (optional but sometimes necessary)
-com.lets.apis.client.generator.dependencies=[\
-    org.springframework.boot:spring-boot-starter-data-mongodb,\
-    sample:dependencies:1.0.0\
-]
 ```
+```properties
+gradle publishApiClient \
+        -PclientName=user-feign-client \
+        -PgroupId=com.lets.apis.client \
+        -PartifactId=user-feign-client \
+        -Pversion=1.0.0.0 \
+        -Prepository=http://xxx.xxx.x.x:xxxx/repository/maven-releases/ \
+        -Puser=admin  \
+        -Ppassword=pass  \
+        -PallowInsecure=true
 
----
 
-## 🛠️ Generate Feign Client
-
-Once everything is configured, run the Gradle task:
-
-```bash
-./gradlew generateApiClientJar
 ```
-
-This will:
-
-- Scan service classes in the specified package
-- Generate Feign-compatible client interfaces
-- Package them into a JAR file (if configured)
-- Output the files to the specified path
-
 ---
 
 ## 📸 Screenshots
 
-### 1. Configuration file example
 
-![caller-config](img/img.png)
-
----
-
-### 2. Sample service classes
+### 1. Sample service classes
 
 ![services](img/img_1.png)
 
 ---
 
-### 3. Running the Gradle task
+### 2. Running the Gradle task
 
 ```bash
-gradle generateApiClientJar
+gradle generateApiClient
 ```
 
 ![generate](img/img_2.png)
 
 ---
 
-### 4. Generated client output
+### 3. Generated client output
 
 ![output](img/img_3.png)
 
