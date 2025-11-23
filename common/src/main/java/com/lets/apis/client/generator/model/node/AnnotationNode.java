@@ -1,6 +1,5 @@
 package com.lets.apis.client.generator.model.node;
 
-import com.lets.apis.client.generator.constants.ApiConstants;
 import com.lets.apis.client.generator.model.ImportDetail;
 import com.lets.apis.client.generator.util.base.Util;
 import lombok.AllArgsConstructor;

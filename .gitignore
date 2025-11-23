@@ -1,6 +1,5 @@
-/.gradle/
+/common/.gradle/
+/common/build/
+/plugin/.gradle/
+/plugin/build/
 /.idea/
-/build/
-/gradle/
-/gradlew
-/gradlew.bat

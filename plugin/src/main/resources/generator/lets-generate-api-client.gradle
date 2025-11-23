@@ -1,0 +1,38 @@
+import groovy.json.JsonOutput
+
+tasks.register("generateApiClient", JavaExec) {
+
+    mainClass = 'com.lets.apis.client.generator.ApiClientGenerator'
+    classpath = sourceSets.main.runtimeClasspath
+
+    doFirst {
+        def props = [
+                clientName:         project.findProperty("clientName") ?: "generator-feign-client",
+                clientPath:         project.findProperty("clientPath") ?: projectDir.absolutePath,
+                clientVersion:      project.findProperty("clientVersion") ?: "1.0.0.0",
+                javaVersion:        project.findProperty("javaVersion") ?: "17",
+                clientDependencies: project.findProperty("clientDependencies") ?: ""
+        ]
+
+        args = [ JsonOutput.toJson(props) ]
+        project.ext._apiProps = props
+    }
+
+    doLast {
+        def p = project._apiProps
+        println("generateApiClient::start")
+
+        def clientDir = "${p.clientPath}/.generator/${p.clientName}"
+
+        exec {
+            workingDir clientDir
+            commandLine "gradle", "create-wrapper"
+        }
+        exec {
+            workingDir clientDir
+            commandLine "gradle", "jar"
+        }
+
+        println("generateApiClient::end")
+    }
+}
