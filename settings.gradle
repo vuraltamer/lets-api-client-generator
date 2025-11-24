@@ -1,0 +1,4 @@
+rootProject.name = 'lets-api-client-generator'
+
+include 'common'
+include 'plugin'

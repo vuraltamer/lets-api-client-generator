@@ -61,9 +61,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/vuraltamer/lets-api-client-generator")
             credentials {
-                println "gpr.token = ${project.findProperty("gpr.token")}"
-                username = project.findProperty("gpr.user")
-                password = project.findProperty("gpr.token")
+                username = System.getenv("GIT_USERNAME")
+                password = System.getenv("GIT_PASSWORD")
             }
         }
     }
@@ -83,6 +82,5 @@ jar {
                 'Implementation-Version': version
         )
     }
-
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
