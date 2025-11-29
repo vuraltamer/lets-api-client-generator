@@ -10,6 +10,7 @@ tasks.register("generateApiClient", JavaExec) {
                 clientName:         project.findProperty("clientName") ?: "generator-feign-client",
                 clientPath:         project.findProperty("clientPath") ?: projectDir.absolutePath,
                 clientVersion:      project.findProperty("clientVersion") ?: "1.0.0.0",
+                groupId:            project.findProperty("groupId") ?: "com.lets.apis.client",
                 javaVersion:        project.findProperty("javaVersion") ?: "17",
                 clientDependencies: project.findProperty("clientDependencies") ?: ""
         ]

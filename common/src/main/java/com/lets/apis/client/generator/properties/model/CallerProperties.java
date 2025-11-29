@@ -14,8 +14,9 @@ public class CallerProperties {
 
     private String clientName;
     private String clientPath;
-    private String javaVersion;
     private String clientVersion;
+    private String groupId;
+    private String javaVersion;
     private String clientDependencies;
 
     public static CallerProperties create(String json) {

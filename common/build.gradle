@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.github.lets.apis.client.generator'
-version = '1.0.0'
+version = '1.0.1'
 
 java {
     toolchain {
@@ -58,13 +58,11 @@ publishing {
     }
     repositories {
         maven {
-            name = "GitHubPackages"
+            name = "git"
             url = uri("https://maven.pkg.github.com/vuraltamer/lets-api-client-generator")
-            credentials {
-                username = System.getenv("GIT_USERNAME")
-                password = System.getenv("GIT_PASSWORD")
-            }
+            credentials(PasswordCredentials)
         }
+        mavenLocal()
     }
 }
 

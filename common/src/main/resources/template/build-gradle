@@ -5,19 +5,18 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.lets.apis.client.generator'
+group = '{GROUP_ID}'
+version = '{CLIENT_VERSION}'
+
+jar {
+    enabled = true
+    archiveClassifier = ''
+}
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of({JAVA_VERSION})
     }
-}
-
-jar {
-    enabled = true
-    archiveClassifier = ''
-    archiveBaseName = '{JAR_NAME}'
-    archiveVersion = '{API_VERSION}'
 }
 
 configurations {
@@ -41,10 +40,8 @@ tasks.register('create-wrapper', Wrapper) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = project.findProperty("groupId") ?: ""
-            artifactId = project.findProperty("artifactId") ?: ""
-            version = project.findProperty("version") ?: ""
             from components.java
+            artifactId = '{CLIENT_NAME}'
         }
     }
 

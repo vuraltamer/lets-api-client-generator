@@ -15,8 +15,9 @@ public class BuildGradleContentLoader {
     public static String load(CallerProperties callerProperties, DependencyProperties dependencyProperties) {
         DependencyProperties.Version dependencyVersions = dependencyProperties.getVersion(callerProperties.getJavaVersion());
         return TemplateReader.content("build-gradle")
-                .replace("{JAR_NAME}", callerProperties.getClientName())
-                .replace("{API_VERSION}", callerProperties.getClientVersion())
+                .replace("{CLIENT_NAME}", callerProperties.getClientName())
+                .replace("{CLIENT_VERSION}", callerProperties.getClientVersion())
+                .replace("{GROUP_ID}", callerProperties.getGroupId())
                 .replace("{IMPLEMENTATIONS}", getImplementations(callerProperties))
                 .replace("{JAVA_VERSION}", callerProperties.getJavaVersion())
                 .replace("{SPRING_FRAMEWORK_VERSION}", dependencyVersions.getSpringBoot())

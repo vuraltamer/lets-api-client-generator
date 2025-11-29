@@ -7,6 +7,6 @@ public class SettingsGradleContentLoader {
 
     public static String load(CallerProperties callerProperties) {
         return new String(TemplateReader.content("settings-gradle"))
-                .replace("{API_NAME}", callerProperties.getClientName());
+                .replace("{CLIENT_NAME}", callerProperties.getClientName());
     }
 }

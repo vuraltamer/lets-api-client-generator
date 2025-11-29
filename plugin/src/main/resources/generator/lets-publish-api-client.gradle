@@ -1,27 +1,24 @@
 tasks.register("publishApiClient", Exec) {
-    def publishProps = [
-            clientName:     project.findProperty("clientName") ?: "generator-feign-client",
-            clientPath:     project.findProperty("clientPath") ?: projectDir.absolutePath,
-            groupId:        project.findProperty("groupId") ?: "com.lets.apis.client",
-            artifactId:     project.findProperty("artifactId") ?: "generator-feign-client",
-            version:        project.findProperty("version") ?: "1.0.0.0",
-            repository:     project.findProperty("repository") ?: "",
-            user:           project.findProperty("user") ?: "",
-            password:       project.findProperty("password") ?: "",
-            allowInsecure:  project.findProperty("allowInsecure") ?: true
-    ]
+    doFirst {
+        def publishProps = [
+                clientName:     project.findProperty("clientName") ?: "generator-feign-client",
+                clientPath:     project.findProperty("clientPath") ?: projectDir.absolutePath,
+                repository:     project.findProperty("repository") ?: "",
+                user:           project.findProperty("user") ?: "",
+                password:       project.findProperty("password") ?: "",
+                allowInsecure:  (project.findProperty("allowInsecure") ?: true).toString()
+        ]
 
-    def rootGradlew = "${project.projectDir}/gradlew"
-    def clientProjectDir = "${publishProps.clientPath}/.generator/${publishProps.clientName}"
-
-    commandLine rootGradlew,
-            "publish",
-            "--project-dir", clientProjectDir,
-            "-PgroupId=${publishProps.groupId}",
-            "-PartifactId=${publishProps.artifactId}",
-            "-Pversion=${publishProps.version}",
-            "-Prepository=${publishProps.repository}",
-            "-Puser=${publishProps.user}",
-            "-Ppassword=${publishProps.password}",
-            "-PallowInsecure=${publishProps.allowInsecure}"
+        def rootGradlew = "${project.projectDir}/gradlew"
+        def clientProjectDir = "${publishProps.clientPath}/.generator/${publishProps.clientName}"
+        commandLine = [
+                rootGradlew,
+                "publish",
+                "--project-dir", clientProjectDir,
+                "-Prepository=${publishProps.repository}",
+                "-Puser=${publishProps.user}",
+                "-Ppassword=${publishProps.password}",
+                "-PallowInsecure=${publishProps.allowInsecure}"
+        ]
+    }
 }

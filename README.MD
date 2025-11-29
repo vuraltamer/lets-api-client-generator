@@ -12,11 +12,11 @@ Add the following to your project's `build.gradle`:
 
 ```groovy
 plugins {
-    id 'io.github.lets.apis.client.generator' version '1.0.0'
+    id 'io.github.lets.apis.client.generator' version '1.0.1'
 }
 
 dependencies {
-    implementation 'io.github.lets.apis.client.generator:common:1.0.0'
+    implementation 'io.github.lets.apis.client.generator:common:1.0.1'
 }
 ```
 Add the following to your project's `settings.gradle`:
@@ -47,23 +47,22 @@ apply from: 'lets-client-generator/plugin/src/main/resources/generator/lets-publ
 
 ```properties
 gradle generateApiClient \
-    -PclientName=user-feign-client \
-    -PclientPath= \
-    -PclientVersion=1.0.0.0 \
-    -PjavaVersion=17 \
-    -PclientDependencies=com.sample.repo:1.0.0,com.sample.repo:1.0.1
+	-PclientName=user-service-client \
+	-PclientVersion=1.0.0.1 \
+	-PgroupId=com.lets.apis.client \
+	-PclientPath=/tmp/lets/jenkins/client \
+	-PjavaVersion=17 \
+	-PclientDependencies=com.sample.repo:1.0.0,com.sample.repo:1.0.1
 
 ```
 ```properties
 gradle publishApiClient \
-        -PclientName=user-feign-client \
-        -PgroupId=com.lets.apis.client \
-        -PartifactId=user-feign-client \
-        -Pversion=1.0.0.0 \
-        -Prepository=http://xxx.xxx.x.x:xxxx/repository/maven-releases/ \
-        -Puser=admin  \
-        -Ppassword=pass  \
-        -PallowInsecure=true
+                          -PclientName=user-service-client \
+                          -PclientPath=/tmp/lets/jenkins/client \
+                          -Prepository="http://{repo-url}" \
+                          -Puser="admin" \
+                          -Ppassword="pass" \
+                          -PallowInsecure=true
 
 
 ```
